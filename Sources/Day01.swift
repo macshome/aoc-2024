@@ -5,31 +5,43 @@ struct Day01: AdventDay {
   var data: String
 
   // Splits input data into its component parts and convert from string.
-  var entities: [[Int]] {
-    data.split(separator: "\n\n").map {
-      $0.split(separator: "\n").compactMap { Int($0) }
-    }
+  var entities: (left: [Int], right: [Int]) {
+    let left: [Int] =
+      data
+      .split(separator: "\n")
+      .compactMap {
+        $0.split(separator: " ", omittingEmptySubsequences: true).first
+      }
+      .compactMap { Int($0) }
+      .sorted()
+
+    let right: [Int] =
+      data
+      .split(separator: "\n")
+      .compactMap {
+        $0.split(separator: " ", omittingEmptySubsequences: true).last
+      }
+      .compactMap { Int($0) }
+      .sorted()
+
+    return (left, right)
   }
 
   // Replace this with your solution for the first part of the day's challenge.
   func part1() -> Any {
-    // Calculate the sum of the first set of input data
-    entities.first?.reduce(0, +) ?? 0
+    zip(entities.left, entities.right)
+      .reduce(0, { $0 + abs($1.0 - $1.1) })
   }
 
   // Replace this with your solution for the second part of the day's challenge.
   func part2() -> Any {
-    // Sum the maximum entries in each set of data
-    entities.map { $0.max() ?? 0 }.reduce(0, +)
+    let rightCount = entities.right.reduce(into: [:]) { counts, num in
+      counts[num, default: 0] += 1
+    }
+
+    return entities.left.reduce(0) { total, num in
+      total + num * (rightCount[num] ?? 0)
+    }
+
   }
 }
-
-extension Day01 {
-  var column1: [Int] { entities.map(\.0) }
-  var column2: [Int] { entities.map(\.1) }
-
-  func createArrays() {
-    
-  }
-
-          }

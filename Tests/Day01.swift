@@ -15,23 +15,22 @@ struct Day01Tests {
     3   3
     """
 
-  @Test func testCreateArrays() async throws {
+  let testLeftEntities = [1, 2, 3, 3, 3, 4]
+  let testRightEntities = [3, 3, 3, 4, 5, 9]
+
+  @Test func testCreateEntities() async throws {
     let challenge = Day01(data: testData)
-    challenge.createArrays()
-
-
-    
-    #expect(challenge.arrays.count == 2)
-    #expect(challenge.arrays[0].count == 3)
-    #expect(challenge.arrays[1].count == 3)
+    #expect(testLeftEntities == challenge.entities.left)
+    #expect(testRightEntities == challenge.entities.right)
   }
+
   @Test func testPart1() async throws {
     let challenge = Day01(data: testData)
-    #expect(String(describing: challenge.part1()) == "6000")
+    #expect(challenge.part1() as! Int == 11)
   }
 
   @Test func testPart2() async throws {
     let challenge = Day01(data: testData)
-    #expect(String(describing: challenge.part2()) == "32000")
+    #expect(challenge.part2() as! Int == 31)
   }
 }
