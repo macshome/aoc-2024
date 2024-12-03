@@ -10,7 +10,7 @@ struct Day01: AdventDay {
       data
       .split(separator: "\n")
       .compactMap {
-        $0.split(separator: " ", omittingEmptySubsequences: true).first
+        $0.split(separator: " ").first
       }
       .compactMap { Int($0) }
       .sorted()
@@ -19,7 +19,7 @@ struct Day01: AdventDay {
       data
       .split(separator: "\n")
       .compactMap {
-        $0.split(separator: " ", omittingEmptySubsequences: true).last
+        $0.split(separator: " ").last
       }
       .compactMap { Int($0) }
       .sorted()
@@ -42,6 +42,5 @@ struct Day01: AdventDay {
     return entities.left.reduce(0) { total, num in
       total + num * (rightCount[num] ?? 0)
     }
-
   }
 }
